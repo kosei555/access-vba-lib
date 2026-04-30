@@ -8,7 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Compare Database
-Public Sub QueryObInit(db As DAO.Database, qName As String)
+Public Sub QueryObInit(db As DAO.database, qName As String)
 End Sub
 Public Sub SetParam(pName As String, pData As Variant)
     
@@ -17,10 +17,10 @@ End Sub
 Public Function GetQueryCode() As String
 End Function
 
-Public Function ExecQuery() As Boolean
+Public Function ExecQuery() As IErrBuf
 
 End Function
-Public Function GetQueryRecordSet(isDynaset As Boolean) As DAO.Recordset
+Public Function GetQueryRecordSet(rec As DAO.Recordset, isDynaset As Boolean) As IErrBuf
 
 End Function
 

@@ -11,7 +11,7 @@ Option Compare Database
 
 Public Sub RegisterQuery(qName As String)
 End Sub
-Public Sub SetParam(qName As String, pName As String, pData As String)
+Public Sub SetParam(qName As String, pName As String, pData As Variant)
 End Sub
 Public Sub ExecQuery(qName As String)
 End Sub
@@ -21,5 +21,13 @@ Public Sub BeginTrans()
 End Sub
 Public Sub CommitTrans()
 End Sub
-
-
+Public Sub WExecQuery()
+End Sub
+Public Function WithTarget(qName As String) As IQueryManager
+End Function
+Public Sub WSetParam(pName As String, pData As Variant)
+End Sub
+Private Sub ShowErrorAndRollback(errorInfo As IErrBuf)
+End Sub
+Private Sub Rollback()
+End Sub

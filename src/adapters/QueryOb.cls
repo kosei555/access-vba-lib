@@ -18,7 +18,7 @@ Attribute VB_Exposed = False
 '依存関係   :   IQueryOb(クエリ実体インターフェイス),IQueryManager(QueryMangaerインターフェース), QueryMangaer(QueryObの管理)
 '実行環境   :   64bit-AccessVba
 '参照設定   :   Microsoft Office xx.x database engine object library
-
+'               Microsoft Scripting Runtime
 '注意点     :   標準モジュールからQueryObを直接使用することを想定していない。必ずQueryMangaerを使うこと。
 '-------------------------------------------------------------------------------
 
@@ -30,15 +30,15 @@ Const RS_TYPE_SNAPSHOT As Integer = 4
 Const RS_TYPE_DYNASET As Integer = 2
 Private m_queryName As String
 Private m_paramDic As Object
-Private m_queryDef As DAO.QueryDef
-Private m_db As DAO.Database
+Private m_queryDef As DAO.queryDef
+Private m_db As DAO.database
 
 
 Public Sub Class_Initialize()
     Set m_paramDic = CreateObject("Scripting.Dictionary")
 End Sub
 
-Public Sub IQueryOb_QueryObInit(db As DAO.Database, qName As String)
+Public Sub IQueryOb_QueryObInit(db As DAO.database, qName As String)
     Set m_db = db
     Set m_queryDef = db.QueryDefs(qName)
 End Sub
@@ -53,26 +53,31 @@ Public Function IQueryOb_GetQueryCode() As String
     IQueryOb_GetQueryCode = m_queryDef.sql
 End Function
 
-Public Function IQueryOb_ExecQuery() As Boolean
+Public Function IQueryOb_ExecQuery() As IErrBuf
     On Error GoTo Catch
-    
+    Dim error As IErrBuf
     DoCmd.SetWarnings False
     For Each pName In m_paramDic.Keys
         m_queryDef(pName).Value = m_paramDic.Item(pName)
     Next
     m_queryDef.Execute dbFailOnError
-    IQueryOb_ExecQuery = False
+    Set IQueryOb_ExecQuery = Nothing
     GoTo Finally
 Catch:
-    Debug.Print Err.Description
-    IQueryOb_ExecQuery = True
+    Set error = New ErrBuf
+    With error
+        .Description = Err.Description
+        .Number = Err.Number
+        .Source = Err.Source
+    End With
+    Set IQueryOb_ExecQuery = error
 Finally:
     m_paramDic.RemoveAll
     DoCmd.SetWarnings True
 End Function
-Public Function IQueryOb_GetQueryRecordSet(isDynaset As Boolean) As DAO.Recordset
+Public Function IQueryOb_GetQueryRecordSet(rec As DAO.Recordset, isDynaset As Boolean) As IErrBuf
     On Error GoTo Catch
-    
+    Dim error As IErrBuf
     DoCmd.SetWarnings False
     Dim rsType As Integer
     rsType = RS_TYPE_SNAPSHOT
@@ -82,8 +87,17 @@ Public Function IQueryOb_GetQueryRecordSet(isDynaset As Boolean) As DAO.Recordse
     For Each pName In m_paramDic
         m_queryDef(pName).Value = m_paramDic.Item(pName)
     Next
-    Set IQueryOb_GetQueryRecordSet = m_queryDef.OpenRecordset(rsType)
+    Set rec = m_queryDef.OpenRecordset(rsType)
+    Set IQueryOb_GetQueryRecordSet = Nothing
+    GoTo Finally
 Catch:
+    Set error = New ErrBuf
+    With error
+        .Description = Err.Description
+        .Number = Err.Number
+        .Source = Err.Source
+    End With
+    Set IQueryOb_GetQueryRecordSet = error
 Finally:
     m_paramDic.RemoveAll
     DoCmd.SetWarnings True
