@@ -23,39 +23,27 @@ Simplifies database operations, improves code maintainability, and standardizes 
 
 ---
 
-## Example
+## 📦 Components
 
-```vba
-Dim qm As New QueryManager
+### QueryManager
+#### Outline
+Handles query execution, recordset retrieval, and transaction control.
 
-qm.RegisterQuery "Q_InsertUser"
-qm.SetParam "Q_InsertUser", "name", "test"
-
-qm.BeginTrans
-qm.ExecQuery "Q_InsertUser"
-qm.CommitTrans
-```
+- Execute SQL queries
+- Retrieve DAO Recordsets
+- Manage transactions (Begin / Commit / Rollback)
 
 ---
 
 ## Project Structure
 
 * `services` — Main entry classes
-* `adapters` — External dependencies (DB, IO, etc.)
+* `adapters` — Dependencies
 * `interfaces` — Abstractions
 * `debug` — Debugging utilities
 
 ---
 
-## Philosophy
-
-This project aims to:
-
-* Improve code reusability in Access VBA
-* Encourage modular and maintainable design
-* Provide practical building blocks for real-world usage
-
----
 
 ## Status
 
