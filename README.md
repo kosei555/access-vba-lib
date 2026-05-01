@@ -1,53 +1,42 @@
 # Access VBA Library
 
-A modular collection of reusable classes for Microsoft Access VBA development.
-Simplifies database operations, improves code maintainability, and standardizes development practices.
+Microsoft Access VBAの開発を効率化するための再利用可能なクラスライブラリ。
 
 ---
 
-## Features
+## 特徴
 
-- Promote modular design in traditionally monolithic VBA codebases
-- Standardize database access patterns
-- Reduce boilerplate and repetitive DAO code
-- Encourage safer data operations with transaction support
-- Improve long-term maintainability of Access applications
-
----
-
-## Getting Started
-
-1. Clone or download this repository
-2. Import required `.cls` / `.bas` files into your Access VBA project
-3. Use only the components you need
+- モジュール化された再利用可能な設計
+- データベース操作の簡素化
+- トランザクションを考慮した安全な処理
+- 可読性・保守性の向上
 
 ---
 
 ## 📦 Components
 
 ### QueryManager
-#### Outline
-Handles query execution, recordset retrieval, and transaction control.
+#### 機能
 
-- Execute SQL queries
-- Retrieve DAO Recordsets
-- Manage transactions (Begin / Commit / Rollback)
-
----
-
-## Project Structure
-
-* `services` — Main entry classes
-* `adapters` — Dependencies
-* `interfaces` — Abstractions
-* `debug` — Debugging utilities
+- クエリ実行(パラメータクエリ可能)
+- 選択クエリ実行結果のDAOレコードセット取得(パラメータクエリ可能)
+- トランザクション制御
+- クエリ実行時エラーハンドリング
 
 ---
 
+## ディレクトリ構造
 
-## Status
+* `src/services` — 主要なクラスファイルを保存
+* `src/adapters` — service内にあるクラスを実行するために必要な依存クラス
+* `src/interfaces` — 抽象クラス
 
-Work in progress. Contributions are welcome.
+---
+
+
+## 現状
+
+開発中
 
 ---
 
