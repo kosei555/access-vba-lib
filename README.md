@@ -1,18 +1,17 @@
 # Access VBA Library
 
-A modular collection of reusable classes for Access VBA development.
-
-This repository provides common components such as data access helpers, utility functions, and debugging tools to simplify and standardize VBA projects.
+A modular collection of reusable classes for Microsoft Access VBA development.
+Simplifies database operations, improves code maintainability, and standardizes development practices.
 
 ---
 
 ## Features
 
-* Reusable class-based architecture
-* Transaction management and safe query execution
-* Utility components for common tasks
-* Interface-driven design for flexibility
-* Debug and testing support
+- Promote modular design in traditionally monolithic VBA codebases
+- Standardize database access patterns
+- Reduce boilerplate and repetitive DAO code
+- Encourage safer data operations with transaction support
+- Improve long-term maintainability of Access applications
 
 ---
 
