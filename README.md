@@ -13,7 +13,7 @@ Microsoft Access VBAの開発を効率化するための再利用可能なクラ
 
 ---
 
-## 📦 Components
+## コンポーネント
 
 ### QueryManager
 #### 機能
