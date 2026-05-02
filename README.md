@@ -1,66 +1,42 @@
 # Access VBA Library
 
-A modular collection of reusable classes for Access VBA development.
-
-This repository provides common components such as data access helpers, utility functions, and debugging tools to simplify and standardize VBA projects.
+Microsoft Access VBAの開発を効率化するための再利用可能なクラスライブラリ。
 
 ---
 
-## Features
+## 特徴
 
-* Reusable class-based architecture
-* Transaction management and safe query execution
-* Utility components for common tasks
-* Interface-driven design for flexibility
-* Debug and testing support
-
----
-
-## Getting Started
-
-1. Clone or download this repository
-2. Import required `.cls` / `.bas` files into your Access VBA project
-3. Use only the components you need
+- モジュール化された再利用可能な設計
+- データベース操作の簡素化
+- トランザクションを考慮した安全な処理
+- 可読性・保守性の向上
 
 ---
 
-## Example
+## コンポーネント
 
-```vba
-Dim qm As New QueryManager
+### QueryManager
+#### 機能
 
-qm.RegisterQuery "Q_InsertUser"
-qm.SetParam "Q_InsertUser", "name", "test"
-
-qm.BeginTrans
-qm.ExecQuery "Q_InsertUser"
-qm.CommitTrans
-```
+- クエリ実行(パラメータクエリ可能)
+- 選択クエリ実行結果のDAOレコードセット取得(パラメータクエリ可能)
+- トランザクション制御
+- クエリ実行時エラーハンドリング
 
 ---
 
-## Project Structure
+## ディレクトリ構造
 
-* `services` — Main entry classes
-* `adapters` — External dependencies (DB, IO, etc.)
-* `interfaces` — Abstractions
-* `debug` — Debugging utilities
-
----
-
-## Philosophy
-
-This project aims to:
-
-* Improve code reusability in Access VBA
-* Encourage modular and maintainable design
-* Provide practical building blocks for real-world usage
+* `src/services` — 主要なクラスファイルを保存
+* `src/adapters` — service内にあるクラスを実行するために必要な依存クラス
+* `src/interfaces` — 抽象クラス
 
 ---
 
-## Status
 
-Work in progress. Contributions are welcome.
+## 現状
+
+開発中
 
 ---
 
