@@ -25,7 +25,7 @@ Microsoft Access VBAの開発を効率化するための再利用可能なクラ
 
 #### 例
 
-´´´
+```
 
 Option Compare Database
 Option Explicit
@@ -47,7 +47,7 @@ Public Sub test()
     
 End Sub
 
-´´´
+```
 
 ---
 
