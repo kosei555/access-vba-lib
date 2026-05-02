@@ -23,6 +23,32 @@ Microsoft Access VBAの開発を効率化するための再利用可能なクラ
 - トランザクション制御
 - クエリ実行時エラーハンドリング
 
+#### 例
+
+´´´
+
+Option Compare Database
+Option Explicit
+Public Sub test()
+    Dim qm As IQueryManager
+    Set qm = New QueryManager
+    'トランザクション開始
+    qm.BeginTrans
+    'クエリ名を渡す
+    qm.RegisterQuery ("QueryManager_Test_I_P")
+    'パラメータの設定
+    qm.SetParam "QueryManager_Test_I_P", "p_id", "5"
+    qm.SetParam "QueryManager_Test_I_P", "p_name", "6"
+    qm.SetParam "QueryManager_Test_I_P", "p_birth_day", "7"
+    'クエリ実行
+    qm.ExecQuery ("QueryManager_Test_I_P")
+    'トランザクションコミット
+    qm.CommitTrans
+    
+End Sub
+
+´´´
+
 ---
 
 ## ディレクトリ構造
