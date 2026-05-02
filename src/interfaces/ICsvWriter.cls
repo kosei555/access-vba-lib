@@ -16,7 +16,7 @@ End Sub
 Public Sub CreateFile(path As String)
 End Sub
 
-Public Sub AddLine(data() As String)
+Public Sub AddLine(data() As Variant)
 End Sub
 
 Public Sub Complete()

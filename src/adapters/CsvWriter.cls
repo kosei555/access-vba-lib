@@ -67,7 +67,7 @@ Public Sub ICsvWriter_CreateFile(path As String)
     Set m_ts = m_fso.OpenTextFile(m_tmpPath, ForWriting, True, ANSI)
 End Sub
 
-Public Sub ICsvWriter_AddLine(data() As String)
+Public Sub ICsvWriter_AddLine(data() As Variant)
     Dim line As String
     Dim str As Variant
     line = ""
