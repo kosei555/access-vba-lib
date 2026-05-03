@@ -19,10 +19,7 @@ Const TABLE_FIELD_NAME_COLUMN_NUM As Integer = 4
 Const TABLE_DATA_TYPE_COLUMN_NUM As Integer = 5
 Const TABLE_SIZE_COLUMN_NUM As Integer = 6
 Const TABLE_NULL_ALLOW_COLUMN_NUM As Integer = 7
-Const IDX_TABLE_NAME_COLUMN_NUM As Integer = 0
-Const IDX_NAME_COLUMN_NUM As Integer = 1
-Const IDX_FIELD_NAME_COLUMN_NUM As Integer = 2
-Const IDX_SORT_COLUMN_NUM As Integer = 3
+
 Const TABLE_LINKED_ODBC As String = "ODBC接続リンクテーブル"
 Const TABLE_LINKED_NOT_ODBC As String = "ODBC接続でないリンクテーブル"
 Const TABLE_LOCAL As String = "ローカルテーブル"
@@ -43,7 +40,6 @@ Public Sub IObjectDefinitionExporter_ExportToCsv(fullPath As String)
     Set csvW = New CsvWriter
     csvW.CreateFile (fullPath)
     TableExport csvW
-    IdxExport csvW
     csvW.Complete
     
 End Sub
@@ -122,46 +118,7 @@ SystemTableSkip:
     
 End Sub
 
-Private Sub IdxExport(csvW As ICsvWriter)
-    Dim accessOb As AccessObject
-    Dim tDef As tableDef
-    Dim idx As Object
-    Dim field As Object
-    Dim csvD(3) As Variant
-    Dim tableName As String
-    
-    
-    csvD(IDX_TABLE_NAME_COLUMN_NUM) = "テーブル名"
-    csvD(IDX_NAME_COLUMN_NUM) = "インデックス名"
-    csvD(IDX_FIELD_NAME_COLUMN_NUM) = "フィールド名"
-    csvD(IDX_SORT_COLUMN_NUM) = "ソート"
-    
-    csvW.AddLine csvD()
-    For Each accessOb In m_curData.AllTables
-        tableName = accessOb.Name
-        csvD(IDX_TABLE_NAME_COLUMN_NUM) = tableName
-        Set tDef = m_database.TableDefs(tableName)
-        If (IsSystemTable(tDef.Attributes)) Then
-            GoTo SystemTableSkip
-        End If
-        For Each idx In tDef.Indexes
-            csvD(IDX_NAME_COLUMN_NUM) = idx.Name
-            For Each field In idx.Fields
-                csvD(IDX_FIELD_NAME_COLUMN_NUM) = field.Name
-                If (field.Attributes = 1) Then
-                    csvD(IDX_SORT_COLUMN_NUM) = "DESC"
-                Else
-                    csvD(IDX_SORT_COLUMN_NUM) = "ASC"
-                End If
-                csvW.AddLine csvD()
-                csvD(IDX_TABLE_NAME_COLUMN_NUM) = ""
-                csvD(IDX_NAME_COLUMN_NUM) = ""
-                
-            Next
-        Next
-SystemTableSkip:
-    Next
-End Sub
+
 
 
 Private Function GetTableLinkAttribute(value As Long) As String
