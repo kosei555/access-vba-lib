@@ -26,8 +26,8 @@ Attribute VB_Exposed = False
 
 Option Compare Database
 Implements IQueryOb
-Const RS_TYPE_SNAPSHOT As Integer = 4
-Const RS_TYPE_DYNASET As Integer = 2
+Private Const RS_TYPE_SNAPSHOT As Integer = 4
+Private Const RS_TYPE_DYNASET As Integer = 2
 Private m_queryName As String
 Private m_paramDic As Object
 Private m_queryDef As DAO.queryDef
@@ -58,7 +58,7 @@ Public Function IQueryOb_ExecQuery() As IErrBuf
     Dim error As IErrBuf
     DoCmd.SetWarnings False
     For Each pName In m_paramDic.Keys
-        m_queryDef(pName).Value = m_paramDic.Item(pName)
+        m_queryDef(pName).value = m_paramDic.Item(pName)
     Next
     m_queryDef.Execute dbFailOnError
     Set IQueryOb_ExecQuery = Nothing
@@ -85,7 +85,7 @@ Public Function IQueryOb_GetQueryRecordSet(rec As DAO.Recordset, isDynaset As Bo
         rsType = RS_TYPE_DYNASET
     End If
     For Each pName In m_paramDic
-        m_queryDef(pName).Value = m_paramDic.Item(pName)
+        m_queryDef(pName).value = m_paramDic.Item(pName)
     Next
     Set rec = m_queryDef.OpenRecordset(rsType)
     Set IQueryOb_GetQueryRecordSet = Nothing

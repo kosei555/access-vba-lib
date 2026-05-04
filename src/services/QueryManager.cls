@@ -42,7 +42,7 @@ Attribute VB_Exposed = False
 Option Compare Database
 Implements IQueryManager
 
-Const ROLLBACK_MESSAGE As String = "以下のクエリ実行をロールバックします"
+Private Const ROLLBACK_MESSAGE As String = "以下のクエリ実行をロールバックします"
 
 Private m_queryDic As Object
 Private m_db As DAO.database
@@ -113,7 +113,6 @@ Private Sub IQueryManager_ShowErrorAndRollback(errorInfo As IErrBuf)
         Call IQueryManager_Rollback
     End If
     Err.Raise Number:=errorInfo.Number, Source:=errorInfo.Source, Description:=errorInfo.Description
-    
 End Sub
 Private Sub IQueryManager_Rollback()
     MsgBox ROLLBACK_MESSAGE & vbCrLf & m_execHistory
