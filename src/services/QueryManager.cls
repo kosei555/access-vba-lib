@@ -50,11 +50,15 @@ Private m_ws As DAO.Workspace
 Private m_execHistory As String
 Private m_isBeginTrans As Boolean
 Private m_targetQuery As String
+Private m_curData As CurrentData
+
 
 Public Sub Class_Initialize()
     Set m_db = CurrentDb
+    Set m_curData = CurrentData
     Set m_queryDic = CreateObject("Scripting.Dictionary")
     Set m_ws = DBEngine.Workspaces(0)
+    
     m_isBeginTrans = False
 End Sub
 Public Sub IQueryManager_RegisterQuery(qName As String)
@@ -87,6 +91,21 @@ End Sub
 Public Sub IQueryManager_WExecQuery()
     Call IQueryManager_ExecQuery(m_targetQuery)
 End Sub
+
+Public Sub IQueryManager_RegisterAllQuery()
+    Dim accessOb As AccessObject
+    Dim queryName As String
+    Dim query As IQueryOb
+    For Each accessOb In m_curData.AllQueries
+        Set query = New QueryOb
+        queryName = accessOb.Name
+        m_queryDic.Add queryName, query
+        Call query.QueryObInit(m_db, queryName)
+        Set query = Nothing
+    Next
+End Sub
+
+
 Public Function IQueryManager_GetQueryRecordSet(qName As String, Optional isDynaset As Boolean = False) As DAO.Recordset
     Dim query As IQueryOb
     Dim rec As DAO.Recordset

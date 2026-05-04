@@ -23,6 +23,8 @@ Public Sub CommitTrans()
 End Sub
 Public Sub WExecQuery()
 End Sub
+Public Sub RegisterAllQuery()
+End Sub
 Public Function WithTarget(qName As String) As IQueryManager
 End Function
 Public Sub WSetParam(pName As String, pData As Variant)
