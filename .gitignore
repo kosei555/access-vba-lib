@@ -1,7 +1,7 @@
 
 # Office temporary files
 ~$*
-
+*.accdb
 # Access database lock files (laccdb, ldb)
 *.[lL][aA][cC][cC][dD][bB]
 *.[lL][dD][bB]

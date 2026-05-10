@@ -19,6 +19,8 @@ Const TABLE_FIELD_NAME_COLUMN_NUM As Integer = 4
 Const TABLE_DATA_TYPE_COLUMN_NUM As Integer = 5
 Const TABLE_SIZE_COLUMN_NUM As Integer = 6
 Const TABLE_NULL_ALLOW_COLUMN_NUM As Integer = 7
+Const TABLEDEF_ATTRIBUTES_DB_ATTACHED_ODBC As Long = &H20000000
+Const TABLEDEF_ATTRIBUTES_DB_ATTACHED_TABLE As Long = &H40000000
 
 Const TABLE_LINKED_ODBC As String = "ODBC接続リンクテーブル"
 Const TABLE_LINKED_NOT_ODBC As String = "ODBC接続でないリンクテーブル"
@@ -50,7 +52,7 @@ Private Sub TableExport(csvW As ICsvWriter)
     Dim primary As Object
     Dim idx As Object
     Dim field As field
-    Dim csvD(8) As Variant
+    Dim csvD(7) As Variant
     Dim fieldName As String
     Dim tableAttribute As Long
     Set primary = CreateObject("Scripting.Dictionary")
@@ -115,16 +117,12 @@ SystemTableSkip:
     
     Next
     
-    
 End Sub
 
-
-
-
 Private Function GetTableLinkAttribute(value As Long) As String
-    If ((value And &H2000000) = &H2000000) Then
+    If ((value And TABLEDEF_ATTRIBUTES_DB_ATTACHED_ODBC) = TABLEDEF_ATTRIBUTES_DB_ATTACHED_ODBC) Then
         GetTableLinkAttribute = TABLE_LINKED_ODBC
-    ElseIf ((value And &H4000000) = &H4000000) Then
+    ElseIf ((value And TABLEDEF_ATTRIBUTES_DB_ATTACHED_TABLE) = TABLEDEF_ATTRIBUTES_DB_ATTACHED_TABLE) Then
         GetTableLinkAttribute = TABLE_LINKED_NOT_ODBC
     Else
         GetTableLinkAttribute = TABLE_LOCAL
@@ -138,6 +136,7 @@ Private Function IsExclusiveTable(value As Long) As Boolean
             IsExclusiveTable = False
         End If
 End Function
+
 Private Function IsSystemTable(value As Long) As Boolean
     If (((value And &H80000000) = &H80000000) Or value = 2) Then
         IsSystemTable = True
@@ -147,7 +146,7 @@ Private Function IsSystemTable(value As Long) As Boolean
 End Function
 
 Private Sub SetDbDataTypeToStr()
-    Set m_dbDataTypeToStr = New Scripting.Dictionary
+    Set m_dbDataTypeToStr = CreateObject("Scripting.Dictionary")
     With m_dbDataTypeToStr
         .Add 1, "dbBoolean"
         .Add 2, "dbByte"
