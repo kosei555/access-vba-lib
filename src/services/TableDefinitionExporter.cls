@@ -19,8 +19,8 @@ Const TABLE_FIELD_NAME_COLUMN_NUM As Integer = 4
 Const TABLE_DATA_TYPE_COLUMN_NUM As Integer = 5
 Const TABLE_SIZE_COLUMN_NUM As Integer = 6
 Const TABLE_NULL_ALLOW_COLUMN_NUM As Integer = 7
-Const TABLEDEF_ATTRIBUTES_DB_ATTACHED_ODBC As Long = &H20000000
-Const TABLEDEF_ATTRIBUTES_DB_ATTACHED_TABLE As Long = &H40000000
+Const TABLE_DEF_ATTRIBUTE_ENUM_SYSTEM1 As Long = &H80000000
+Const TABLE_DEF_ATTRIBUTE_ENUM_SYSTEM2 As Long = 2
 
 Const TABLE_LINKED_ODBC As String = "ODBC接続リンクテーブル"
 Const TABLE_LINKED_NOT_ODBC As String = "ODBC接続でないリンクテーブル"
@@ -120,9 +120,9 @@ SystemTableSkip:
 End Sub
 
 Private Function GetTableLinkAttribute(value As Long) As String
-    If ((value And TABLEDEF_ATTRIBUTES_DB_ATTACHED_ODBC) = TABLEDEF_ATTRIBUTES_DB_ATTACHED_ODBC) Then
+    If ((value And dbAttachedODBC) = dbAttachedODBC) Then
         GetTableLinkAttribute = TABLE_LINKED_ODBC
-    ElseIf ((value And TABLEDEF_ATTRIBUTES_DB_ATTACHED_TABLE) = TABLEDEF_ATTRIBUTES_DB_ATTACHED_TABLE) Then
+    ElseIf ((value And dbAttachedTable) = dbAttachedTable) Then
         GetTableLinkAttribute = TABLE_LINKED_NOT_ODBC
     Else
         GetTableLinkAttribute = TABLE_LOCAL
@@ -130,7 +130,7 @@ Private Function GetTableLinkAttribute(value As Long) As String
 End Function
 
 Private Function IsExclusiveTable(value As Long) As Boolean
-        If ((value And &H200000) = &H200000) Then
+        If ((value And dbAttachExclusive) = dbAttachExclusive) Then
             IsExclusiveTable = True
         Else
             IsExclusiveTable = False
@@ -138,7 +138,7 @@ Private Function IsExclusiveTable(value As Long) As Boolean
 End Function
 
 Private Function IsSystemTable(value As Long) As Boolean
-    If (((value And &H80000000) = &H80000000) Or value = 2) Then
+    If (((value And TABLE_DEF_ATTRIBUTE_ENUM_SYSTEM1) = TABLE_DEF_ATTRIBUTE_ENUM_SYSTEM1) Or value = TABLE_DEF_ATTRIBUTE_ENUM_SYSTEM2) Then
         IsSystemTable = True
     Else
         IsSystemTable = False
